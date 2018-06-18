@@ -14,9 +14,9 @@ const wsServer  = new websocket.Server({
 var songQueue = [];
 
 function broadcast(message){
-    for (var it = wsServer.clients.values(); client = null; client=it.next().value){
-        client.send(message);
-    }
+    wsServer.clients.forEach((client) => {
+        client.send(JSON.stringify(message))
+    })
 };
 
 function playMusic(message){
