@@ -1,0 +1,20 @@
+{
+  "name": "music-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  },
+  "dependencies": {
+    "lame": "^1.2.4",
+    "speaker": "^0.4.1",
+    "youtube-audio-stream": "^0.2.0"
+  }
+}
