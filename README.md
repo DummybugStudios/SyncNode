@@ -10,9 +10,9 @@ A collaborative music experience
 ## Installing
 
 ### Client
-    go into the app folder, open command prompt there  
-    run `npm install` to install dependencies  
-    to run it, run `npm start`
+go into the app folder, open command prompt there  
+run `npm install` to install dependencies  
+to run it, run `npm start`
 ### Server
-    run `npm install` in the root directory of this project. 
-    To start the program run `node server.js`
+run `npm install` in the root directory of this project. 
+To start the program run `node server.js`
