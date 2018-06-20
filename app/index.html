@@ -3,12 +3,14 @@
         <title>Music player app</title>
     </head>
     <body>
-        <button onclick="renderer.playMusic()">
+        <h1> Now playing : <span id="current-title">Hello</span></h1>
+        <input type="text" placeholder="url" id="music-url">
+        <button onclick="player.submitSong()">
             Play Music
         </button>
 
         <script>
-            var renderer = require("./renderer.js")
+            var player = require("./player.js")
         </script>
     </body>
 </html>
