@@ -13,7 +13,7 @@
     "electron": "^2.0.2"
   },
   "dependencies": {
-    "lame": "^1.2.4",
+    "fluent-ffmpeg": "^2.1.2",
     "speaker": "^0.4.1",
     "ytdl-core": "^0.20.4"
   }

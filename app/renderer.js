@@ -1,15 +1,18 @@
 const ytdl    = require('ytdl-core')
 const Speaker = require('speaker')
-const lame    = require('lame')
-const decoder  = lame.Decoder
-const speaker = new Speaker()
+const ffmpeg = require('fluent-ffmpeg')
+const speakers = new Speaker()
 
-const url = "https://www.youtube.com/watch?v=bZ7jUGCVFss" 
+const url = "https://www.youtube.com/watch?v=bZ7jUGCVFss"
 
 function playMusic(){
-    ytdl(url,{
+    var audiostream = ytdl(url,{
         filter:'audioonly'
-    }).pipe(decoder()).pipe(speaker)
+    })
+
+    ffmpeg(audiostream)
+        .format('wav')
+        .pipe(speakers)
 }
 
 module.exports={playMusic}
