@@ -9,10 +9,15 @@ A collaborative music experience
 
 ## Installing
 
+Easier install instructions will come your way once I figure out what the hell I'm doing 
+At the moment these are for development purposes and you will have to install nodejs
+
 ### Client
-go into the app folder, open command prompt there  
-run `npm install` to install dependencies  
-to run it, run `npm start`
+* Open a terminal in the **app** folder
+* run `npm install` to install dependencies  
+* To run the client run `npm start`
+
 ### Server
-run `npm install` in the root directory of this project. 
-To start the program run `node server.js`
+* Open a terminal in the **server** folder
+* Run `node install` to install dependencies
+* Run `npm start` to start the server 
