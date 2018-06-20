@@ -1,16 +1,18 @@
 # SyncNode
 A collaborative music experience
 
-## Features
-* still massively in dev
-* doesn't do anythign useful
-* Stay away from this project for now
-* I'm still learning how the hell javascript works so this is horrible
+Reduces lag when listening to music together because the
+clients maintain a local copy of the music and keeps it
+in the sync. 
+(Well actually it doesn't do anything at the moment it's
+still massively in dev)
+
+## Requirements 
+* node js (https://nodejs.org/en/) 
+* ffmpeg (https://www.ffmpeg.org/download.html)
+* A c/c++ compiler
 
 ## Installing
-
-Easier install instructions will come your way once I figure out what the hell I'm doing 
-At the moment these are for development purposes and you will have to install nodejs
 
 ### Client
 * Open a terminal in the **app** folder
@@ -21,3 +23,9 @@ At the moment these are for development purposes and you will have to install no
 * Open a terminal in the **server** folder
 * Run `node install` to install dependencies
 * Run `npm start` to start the server 
+
+### Note for Windows users
+Since the client uses native node modules you will need to have python 2.7
+and visual studio c++ compilers
+if you don't have them installed look at this:
+https://github.com/felixrieseberg/windows-build-tools
