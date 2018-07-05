@@ -19,12 +19,17 @@ function broadcast(message){
     })
 };
 
+// TODO: use these functions to maintain state in the server
 function playMusic(message){
     songQueue.push(message['url'])
     broadcast(message)
 }
 
 function pauseMusic(message){
+    broadcast(message)
+}
+
+function resumeMusic(message){
     broadcast(message)
 }
 /*
@@ -44,6 +49,9 @@ function handleIncomingMessage(rawMessage){
             break
         case "pause":
             pauseMusic(message)
+            break
+        case "resume":
+            resumeMusic(message)
             break
     }
 }

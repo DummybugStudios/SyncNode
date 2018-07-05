@@ -39,6 +39,9 @@ wsConnection.onmessage =  function incoming(data){
         case "pause":
             clientPauseMusic()
             break;
+        case "resume":
+            clientResumeMusic()
+            break;
     }
 }
 
@@ -60,6 +63,18 @@ function pauseSong(){
     if(wsConnection.readyState === ws.OPEN){
         message = {
             type: 'pause'
+        }
+        wsConnection.send(JSON.stringify(message))
+
+    }else{
+        alert("Not connected to server")
+    }
+}
+
+function resumeSong(){
+    if(wsConnection.readyState === ws.OPEN){
+        message = {
+            type: 'resume'
         }
         wsConnection.send(JSON.stringify(message))
 
@@ -99,13 +114,22 @@ function clientPlayMusic(url){
 }
 
 function clientPauseMusic(){
+    //FIXME: buffer underflow issue with speaker (destroy speaker?)
     if (!paused){
         musicReadFile.unpipe()
         paused = true;
     }
 }
 
+function clientResumeMusic(){
+    if (paused){
+        musicReadFile.pipe(speakers)
+        paused = false
+    }
+}
+
 module.exports={
+    resumeSong,
     pauseSong,
     playSong
 }
