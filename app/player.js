@@ -8,7 +8,7 @@ const fs = require("fs")
 
 var started;
 var musicReadFile;
-var paused = true; 
+var paused = false; 
 
 const WS_PORT = 1231
 const WS_HOST = "localhost"
@@ -86,13 +86,14 @@ function clientPlayMusic(url){
         console.log("download started")
     })
 
+    playing = false
     // TODO: instead of using downloaded length use the length converted by ffmpeg
     audioStream.on('progress', function(length, download, total){
         // TODO: change buffer from 5% of the whole video to ≈10s to improve large videos
-        if (paused === true && download/total > 0.1){
+        if (!playing && download/total > 0.1){
             musicReadFile = fs.createReadStream("./music")
             musicReadFile.pipe(speakers)
-            paused = false
+            playing = true
         }
     })
 }
