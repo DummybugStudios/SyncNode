@@ -23,6 +23,10 @@ function playMusic(message){
     songQueue.push(message['url'])
     broadcast(message)
 }
+
+function pauseMusic(message){
+    broadcast(message)
+}
 /*
 Message has to contain url of the music
 to be played (url)
@@ -34,8 +38,14 @@ play needs a value called "url" which is the url to play
 */
 function handleIncomingMessage(rawMessage){
     var message = JSON.parse(rawMessage);
-    if (message['type'] === "play")
-        playMusic(message);
+    switch (message.type){
+        case "play":
+            playMusic(message)
+            break
+        case "pause":
+            pauseMusic(message)
+            break
+    }
 }
 
 wsServer.on('connection', function(client, request){

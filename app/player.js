@@ -4,11 +4,18 @@ const speakers = new Speaker()
 const ytdl    = require('ytdl-core')
 const ffmpeg = require('fluent-ffmpeg')
 const ws = require("ws")
+const fs = require("fs")
+
+var started;
+var musicReadFile;
+var paused = true; 
 
 const WS_PORT = 1231
 const WS_HOST = "localhost"
 
 const WS_URL = "ws://"+WS_HOST+":"+WS_PORT.toString()
+
+var audioStream;
 
 
 const urlInput = document.getElementById("music-url")
@@ -27,13 +34,16 @@ wsConnection.onmessage =  function incoming(data){
     console.log(parsedData)
     switch (parsedData.type) {
         case "play":
-            playMusic(parsedData.url)
+            clientPlayMusic(parsedData.url)
+            break;
+        case "pause":
+            clientPauseMusic()
             break;
     }
 }
 
 // function accessed by user when they press the play button
-function submitSong(){
+function playSong(){
     if (wsConnection.readyState === ws.OPEN){
         message = {
             type: "play",
@@ -46,18 +56,55 @@ function submitSong(){
     }
 }
 
-function playMusic(url){
+function pauseSong(){
+    if(wsConnection.readyState === ws.OPEN){
+        message = {
+            type: 'pause'
+        }
+        wsConnection.send(JSON.stringify(message))
+
+    }else{
+        alert("Not connected to server")
+    }
+}
+
+function clientPlayMusic(url){
     audioInfo = ytdl.getInfo(url).then((result) =>{
         currentTitle.innerHTML = result.title
     })
-    audioStream = ytdl(url, {
-        quality: "highestaudio",
-        filter:"audioonly"
-    })
+
+    var musicWriteFile =fs.createWriteStream("./music")
+
+    audioStream = ytdl(url ,{filter:"audioonly"})
 
     ffmpeg(audioStream)
         .format("wav")
-        .pipe(speakers)
+        .pipe(musicWriteFile)
+
+
+    audioStream.on("response", function(){
+        console.log("download started")
+    })
+
+    // TODO: instead of using downloaded length use the length converted by ffmpeg
+    audioStream.on('progress', function(length, download, total){
+        // TODO: change buffer from 5% of the whole video to ≈10s to improve large videos
+        if (paused === true && download/total > 0.1){
+            musicReadFile = fs.createReadStream("./music")
+            musicReadFile.pipe(speakers)
+            paused = false
+        }
+    })
 }
 
-module.exports={submitSong}
+function clientPauseMusic(){
+    if (!paused){
+        musicReadFile.unpipe()
+        paused = true;
+    }
+}
+
+module.exports={
+    pauseSong,
+    playSong
+}
